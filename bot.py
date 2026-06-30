@@ -40,15 +40,28 @@ logging.basicConfig(
 logger = logging.getLogger("expense_bot")
 
 CONFIG_PATH = "config.json"
+PUBLIC_CONFIG_PATH = "public_config.json"
 
 
 def load_config():
-    """Local settings from config.json, with env vars overriding for deploys."""
+    """
+    Non-secret settings (currency, budgets) come from public_config.json,
+    which is committed to git and deployed. Secrets (telegram_token) and
+    local-only overrides come from config.json (gitignored) or env vars,
+    which take priority for production deploys.
+    """
+    cfg = {}
+    try:
+        with open(PUBLIC_CONFIG_PATH, "r", encoding="utf-8") as f:
+            cfg.update(json.load(f))
+    except FileNotFoundError:
+        pass
+
     try:
         with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-            cfg = json.load(f)
+            cfg.update(json.load(f))
     except FileNotFoundError:
-        cfg = {}
+        pass
 
     if os.environ.get("TELEGRAM_TOKEN"):
         cfg["telegram_token"] = os.environ["TELEGRAM_TOKEN"]
