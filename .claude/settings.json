@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(pip install flask flask-cors psycopg2-binary 2>&1)"
+    ]
+  }
+}
