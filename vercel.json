@@ -1,6 +1,11 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/dashboard.html" }
+  "builds": [
+    { "src": "dashboard.html", "use": "@vercel/static" },
+    { "src": "env.js", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/env.js", "dest": "/env.js" },
+    { "src": "/(.*)", "dest": "/dashboard.html" }
   ]
 }
