@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(pip install flask flask-cors psycopg2-binary 2>&1)"
+      "PowerShell(pip install flask flask-cors psycopg2-binary 2>&1)",
+      "Bash(npm ls *)",
+      "Bash(node -e \"require\\('jsdom'\\)\")"
     ]
   }
 }
